@@ -9,4 +9,5 @@ public class SendMessageRequest
 {
     private String content;
     private Long senderId;
+    private Long chatId;
 }

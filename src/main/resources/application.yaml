@@ -6,12 +6,13 @@ spring:
         url: jdbc:h2:mem:h2
         driver-class-name: org.h2.Driver
         username: sa
-        password:
+        password: sa
         hikari:
             maximum-pool-size: 10
     h2:
         console:
             enabled: true
             path: /h2-console
-
+    jpa:
+        database-platform: org.hibernate.dialect
 

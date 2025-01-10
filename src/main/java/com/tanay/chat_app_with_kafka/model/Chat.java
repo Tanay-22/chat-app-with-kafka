@@ -1,32 +1,35 @@
 package com.tanay.chat_app_with_kafka.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-public class User
+public class Chat
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NonNull
     private String name;
 
-    @NonNull
-    private Long phone;
+    @JsonIgnore
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Message> messages = new ArrayList<>();
+
+    @ElementCollection
+    private List<User> users = new ArrayList<>();
 
     @Override
     public final boolean equals(Object o)
@@ -37,10 +40,10 @@ public class User
             return false;
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) // class compatibility check
+        if (thisEffectiveClass != oEffectiveClass)
             return false;
-        User user = (User) o;
-        return getId() != null && Objects.equals(getId(), user.getId());
+        Chat chat = (Chat) o;
+        return getId() != null && Objects.equals(getId(), chat.getId());
     }
 
     @Override
