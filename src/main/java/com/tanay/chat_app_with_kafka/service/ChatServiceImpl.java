@@ -5,8 +5,9 @@ import com.tanay.chat_app_with_kafka.model.Chat;
 import com.tanay.chat_app_with_kafka.model.User;
 import com.tanay.chat_app_with_kafka.repository.ChatRepository;
 import com.tanay.chat_app_with_kafka.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class ChatServiceImpl implements ChatService
 {
     private final ChatRepository chatRepository;

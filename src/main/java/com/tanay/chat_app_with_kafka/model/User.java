@@ -1,15 +1,13 @@
 package com.tanay.chat_app_with_kafka.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
 
 @Entity
+@Table(name = "users")
 @Getter
 @Setter
 @ToString
@@ -46,6 +44,7 @@ public class User
     @Override
     public final int hashCode()
     {
-        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer()
+                .getPersistentClass().hashCode() : getClass().hashCode();
     }
 }

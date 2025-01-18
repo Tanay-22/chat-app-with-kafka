@@ -44,12 +44,13 @@ public class KafkaProducerService
 
         Message message = new Message();
         message.setSendAt(LocalDateTime.now());
-        message.setId(10L);
         message.setContent(req.getContent());
         message.setSender(sender);
         message.setChat(chat);
-        kafkaTemplate.send(TOPIC, req.getChatId().toString(), message);
 
-        return messageRepository.save(message);
+        Message savedMessage = messageRepository.save(message);
+        kafkaTemplate.send(TOPIC, req.getChatId().toString(), savedMessage);
+
+        return savedMessage;
     }
 }
